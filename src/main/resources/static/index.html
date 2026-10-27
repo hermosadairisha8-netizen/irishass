@@ -6,30 +6,31 @@
 <title>Irisha - Scientific Calculator</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
-body{background:linear-gradient(135deg,#f5f3ff 0%,#fce7f3 50%,#e9d5ff 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:15px}
-.calculator{background:rgba(255,255,255,0.92);width:100%;max-width:380px;border-radius:24px;padding:18px;box-shadow:0 8px 28px rgba(168,85,247,0.18);border:2px solid #e9d5ff;backdrop-filter:blur(12px)}
-h1{text-align:center;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900;margin-bottom:6px;letter-spacing:0.5px}
-.subtitle{text-align:center;color:#c084fc;font-size:11px;margin-bottom:14px}
-.display{background:linear-gradient(135deg,#faf5ff,#fdf2f8);border:2px solid #e9d5ff;border-radius:16px;padding:14px;text-align:right;min-height:90px;margin-bottom:12px;box-shadow:inset 0 2px 8px rgba(168,85,247,0.08)}
-#expr{color:#a855f7;font-size:13px;min-height:18px;word-break:break-all;opacity:0.9}
-#curr{color:#581c87;font-size:32px;font-weight:800;word-break:break-all}
+body{background:linear-gradient(135deg,#dbeafe 0%,#bfdbfe 50%,#93c5fd 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:15px}
+.calculator{background:rgba(255,255,255,0.92);width:100%;max-width:380px;border-radius:24px;padding:18px;box-shadow:0 8px 28px rgba(37,99,235,0.18);border:2px solid #bfdbfe;backdrop-filter:blur(12px)}
+h1{text-align:center;background:linear-gradient(135deg,#1d4ed8,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900;margin-bottom:6px;letter-spacing:0.5px}
+h1 span{font-size:18px}
+.subtitle{text-align:center;color:#60a5fa;font-size:11px;margin-bottom:14px}
+.display{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd;border-radius:16px;padding:14px;text-align:right;min-height:90px;margin-bottom:12px;box-shadow:inset 0 2px 8px rgba(37,99,235,0.08)}
+#expr{color:#2563eb;font-size:13px;min-height:18px;word-break:break-all;opacity:0.9}
+#curr{color:#1e3a8a;font-size:32px;font-weight:800;word-break:break-all}
 .sci-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}
 .std-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
 button{height:52px;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.12s ease;box-shadow:0 2px 0 rgba(0,0,0,0.08)}
 button:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,0.08)}
-.sci{background:#f3e8ff;color:#7e22ce;font-size:13px;border:1px solid #e9d5ff}
-.sci:hover{background:#ede9fe}
-.func{background:#e9d5ff;color:#7e22ce}
-.num{background:white;color:#581c87;border:1px solid #f5f3ff;font-size:18px}
-.op{background:linear-gradient(135deg,#a855f7,#ec4899);color:white;box-shadow:0 3px 0 #9333ea;font-size:18px}
-.eq{background:linear-gradient(135deg,#9333ea,#ec4899);color:white;box-shadow:0 3px 0 #7e22ce;font-size:20px}
+.sci{background:#dbeafe;color:#1e40af;font-size:13px;border:1px solid #bfdbfe}
+.sci:hover{background:#bfdbfe}
+.func{background:#bfdbfe;color:#1e40af}
+.num{background:white;color:#1e3a8a;border:1px solid #dbeafe;font-size:18px}
+.op{background:linear-gradient(135deg,#2563eb,#3b82f6);color:white;box-shadow:0 3px 0 #1d4ed8;font-size:18px}
+.eq{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:white;box-shadow:0 3px 0 #1e3a8a;font-size:20px}
 .zero{grid-column:span 2}
 </style>
 </head>
 <body>
 <div class="calculator">
-<h1>♥ Irisha ✨</h1>
-<div class="subtitle">Scientific Calculator</div>
+<h1><span>💙</span> Irisha <span>✨</span></h1>
+<div class="subtitle">Scientific Calculator - Blue</div>
 <div class="display"><div id="expr"></div><div id="curr">0</div></div>
 <div class="sci-row">
 <button class="sci" onclick="sciFunc('sin')">sin</button>
@@ -79,11 +80,8 @@ let expr='', display='0';
 const exprEl=document.getElementById('expr'), currEl=document.getElementById('curr');
 function update(){exprEl.textContent=expr; currEl.textContent=display}
 function input(v){
-  if(display==='0' && v!=='.' && !isNaN(v)) {display=v; if(expr==='') expr='';}
-  else {
-    if(v==='%' ) {display+='%';}
-    else display+=v;
-  }
+  if(display==='0' && v!=='.' && !isNaN(v)) {display=v;}
+  else {display+=v;}
   expr+=v;
   update();
 }
@@ -93,7 +91,7 @@ function inputConst(c){
   update();
 }
 function clearAll(){expr=''; display='0'; update();}
-function toggleSign(){ if(display.startsWith('-')) {display=display.slice(1); expr=expr.slice(0,-display.length-1)+display;} else {display='-'+display; expr+='-';} update();}
+function toggleSign(){ if(display.startsWith('-')) {display=display.slice(1);} else {display='-'+display;} expr=display; update();}
 function backspace(){ if(expr.length>0){expr=expr.slice(0,-1); display=display.slice(0,-1)||'0'; update();}}
 function sciFunc(fn){
   try{
@@ -122,10 +120,7 @@ function sciFunc(fn){
 function calculate(){
   try{
     let e = expr.replace(/π/g, Math.PI.toString()).replace(/e/g, Math.E.toString()).replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-').replace(/\^/g,'**');
-    // handle % as /100
     e = e.replace(/%/g,'/100');
-    // handle sqrt, etc already handled, just eval remaining
-    // safe eval for basic
     let res = Function('"use strict"; return ('+e+')')();
     if(!isFinite(res)) throw 'Error';
     display=Number.isInteger(res)?res.toString():parseFloat(res.toFixed(10)).toString();
