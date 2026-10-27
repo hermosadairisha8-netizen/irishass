@@ -1,67 +1,141 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Irisha - Calculator</title>
+<title>Irisha - Scientific Calculator</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
-body{background:linear-gradient(135deg,#f5f3ff 0%,#fce7f3 50%,#e9d5ff 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;position:relative;overflow:hidden}
-body::before{content:'💜';position:absolute;top:8%;left:12%;font-size:36px;opacity:0.4;animation:float1 5s ease-in-out infinite}
-body::after{content:'✨';position:absolute;bottom:10%;right:14%;font-size:32px;opacity:0.4;animation:float2 6s ease-in-out infinite}
-.calculator{background:rgba(255,255,255,0.9);width:100%;max-width:340px;border-radius:24px;padding:22px;box-shadow:0 8px 24px rgba(168,85,247,0.15);border:2px solid #e9d5ff;position:relative;z-index:2;backdrop-filter:blur(12px)}
-h1{text-align:center;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900;margin-bottom:18px;letter-spacing:0.5px}
-h1 span{font-size:18px}
-.display{background:linear-gradient(135deg,#faf5ff,#fdf2f8);border:2px solid #e9d5ff;border-radius:16px;padding:18px;text-align:right;min-height:80px;margin-bottom:16px;box-shadow:inset 0 2px 8px rgba(168,85,247,0.08)}
-#prev{color:#a855f7;font-size:13px;min-height:16px;word-break:break-all}
-#curr{color:#6b21a8;font-size:36px;font-weight:800;word-break:break-all}
-.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
-button{height:60px;border:none;border-radius:16px;font-size:19px;font-weight:700;cursor:pointer;transition:all 0.15s ease;box-shadow:0 3px 0 rgba(0,0,0,0.08)}
-button:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,0.08)}
-.num{background:white;color:#6b21a8;border:2px solid #f5f3ff}
-.op{background:linear-gradient(135deg,#a855f7,#ec4899);color:white;box-shadow:0 3px 0 #9333ea}
-.func{background:#e9d5ff;color:#7e22ce;box-shadow:0 3px 0 #d8b4fe}
-.eq{background:linear-gradient(135deg,#9333ea,#ec4899);color:white;box-shadow:0 3px 0 #7e22ce}
-@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+body{background:linear-gradient(135deg,#f5f3ff 0%,#fce7f3 50%,#e9d5ff 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:15px}
+.calculator{background:rgba(255,255,255,0.92);width:100%;max-width:380px;border-radius:24px;padding:18px;box-shadow:0 8px 28px rgba(168,85,247,0.18);border:2px solid #e9d5ff;backdrop-filter:blur(12px)}
+h1{text-align:center;background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900;margin-bottom:6px;letter-spacing:0.5px}
+.subtitle{text-align:center;color:#c084fc;font-size:11px;margin-bottom:14px}
+.display{background:linear-gradient(135deg,#faf5ff,#fdf2f8);border:2px solid #e9d5ff;border-radius:16px;padding:14px;text-align:right;min-height:90px;margin-bottom:12px;box-shadow:inset 0 2px 8px rgba(168,85,247,0.08)}
+#expr{color:#a855f7;font-size:13px;min-height:18px;word-break:break-all;opacity:0.9}
+#curr{color:#581c87;font-size:32px;font-weight:800;word-break:break-all}
+.sci-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}
+.std-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+button{height:52px;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.12s ease;box-shadow:0 2px 0 rgba(0,0,0,0.08)}
+button:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,0.08)}
+.sci{background:#f3e8ff;color:#7e22ce;font-size:13px;border:1px solid #e9d5ff}
+.sci:hover{background:#ede9fe}
+.func{background:#e9d5ff;color:#7e22ce}
+.num{background:white;color:#581c87;border:1px solid #f5f3ff;font-size:18px}
+.op{background:linear-gradient(135deg,#a855f7,#ec4899);color:white;box-shadow:0 3px 0 #9333ea;font-size:18px}
+.eq{background:linear-gradient(135deg,#9333ea,#ec4899);color:white;box-shadow:0 3px 0 #7e22ce;font-size:20px}
+.zero{grid-column:span 2}
 </style>
 </head>
 <body>
 <div class="calculator">
-<h1><span>💜</span> Irisha <span>✨</span></h1>
-<div class="display"><div id="prev"></div><div id="curr">0</div></div>
-<div class="buttons">
+<h1>♥ Irisha ✨</h1>
+<div class="subtitle">Scientific Calculator</div>
+<div class="display"><div id="expr"></div><div id="curr">0</div></div>
+<div class="sci-row">
+<button class="sci" onclick="sciFunc('sin')">sin</button>
+<button class="sci" onclick="sciFunc('cos')">cos</button>
+<button class="sci" onclick="sciFunc('tan')">tan</button>
+<button class="sci" onclick="sciFunc('log')">log</button>
+<button class="sci" onclick="sciFunc('ln')">ln</button>
+</div>
+<div class="sci-row">
+<button class="sci" onclick="input('(')">(</button>
+<button class="sci" onclick="input(')')">)</button>
+<button class="sci" onclick="sciFunc('pow')">x^y</button>
+<button class="sci" onclick="sciFunc('sqrt')">√</button>
+<button class="sci" onclick="sciFunc('fact')">!</button>
+</div>
+<div class="sci-row">
+<button class="sci" onclick="inputConst('π')">π</button>
+<button class="sci" onclick="inputConst('e')">e</button>
+<button class="sci" onclick="sciFunc('exp')">EXP</button>
+<button class="sci" onclick="sciFunc('sq')">x²</button>
+<button class="sci" onclick="input('%')">%</button>
+</div>
+<div class="std-row">
 <button class="func" onclick="clearAll()">C</button>
 <button class="func" onclick="toggleSign()">+/-</button>
-<button class="func" onclick="percent()">%</button>
-<button class="op" onclick="inputOp('/')">÷</button>
-<button class="num" onclick="inputNum('7')">7</button>
-<button class="num" onclick="inputNum('8')">8</button>
-<button class="num" onclick="inputNum('9')">9</button>
-<button class="op" onclick="inputOp('*')">×</button>
-<button class="num" onclick="inputNum('4')">4</button>
-<button class="num" onclick="inputNum('5')">5</button>
-<button class="num" onclick="inputNum('6')">6</button>
-<button class="op" onclick="inputOp('-')">−</button>
-<button class="num" onclick="inputNum('1')">1</button>
-<button class="num" onclick="inputNum('2')">2</button>
-<button class="num" onclick="inputNum('3')">3</button>
-<button class="op" onclick="inputOp('+')">+</button>
-<button class="num" style="grid-column:span 2" onclick="inputNum('0')">0</button>
-<button class="num" onclick="inputNum('.')">.</button>
+<button class="func" onclick="backspace()">⌫</button>
+<button class="op" onclick="input('/')">÷</button>
+<button class="num" onclick="input('7')">7</button>
+<button class="num" onclick="input('8')">8</button>
+<button class="num" onclick="input('9')">9</button>
+<button class="op" onclick="input('*')">×</button>
+<button class="num" onclick="input('4')">4</button>
+<button class="num" onclick="input('5')">5</button>
+<button class="num" onclick="input('6')">6</button>
+<button class="op" onclick="input('-')">−</button>
+<button class="num" onclick="input('1')">1</button>
+<button class="num" onclick="input('2')">2</button>
+<button class="num" onclick="input('3')">3</button>
+<button class="op" onclick="input('+')">+</button>
+<button class="num zero" onclick="input('0')">0</button>
+<button class="num" onclick="input('.')">.</button>
 <button class="eq" onclick="calculate()">=</button>
 </div>
 </div>
 <script>
-let curr='0',prev='',op=null,reset=false;
-const currEl=document.getElementById('curr'),prevEl=document.getElementById('prev');
-function update(){currEl.textContent=curr;prevEl.textContent=prev}
-function inputNum(n){if(reset){curr=n==='.'?'0.':n;reset=false}else{if(n==='.'&&curr.includes('.'))return;if(curr==='0'&&n!=='.')curr=n;else curr+=n;}update()}
-function inputOp(o){if(op&&!reset)calculate();prev=curr+' '+o;op=o;reset=true;update()}
-function calculate(){if(!op||reset)return;let a=parseFloat(prev),b=parseFloat(curr),r=0;switch(op){case '+':r=a+b;break;case '-':r=a-b;break;case '*':r=a*b;break;case '/':if(b===0){curr="Can't ÷ by 0 💔";prev='';op=null;update();return}r=a/b;break;case '%':r=a%b;break}curr=Number.isInteger(r)?r.toString():parseFloat(r.toFixed(8)).toString();prev='';op=null;reset=true;update()}
-function clearAll(){curr='0';prev='';op=null;update()}
-function toggleSign(){if(curr==='0')return;curr=curr.startsWith('-')?curr.slice(1):'-'+curr;update()}
-function percent(){curr=(parseFloat(curr)/100).toString();update()}
+let expr='', display='0';
+const exprEl=document.getElementById('expr'), currEl=document.getElementById('curr');
+function update(){exprEl.textContent=expr; currEl.textContent=display}
+function input(v){
+  if(display==='0' && v!=='.' && !isNaN(v)) {display=v; if(expr==='') expr='';}
+  else {
+    if(v==='%' ) {display+='%';}
+    else display+=v;
+  }
+  expr+=v;
+  update();
+}
+function inputConst(c){
+  let val = c==='π'? Math.PI.toString() : Math.E.toString();
+  display=val; expr+=c;
+  update();
+}
+function clearAll(){expr=''; display='0'; update();}
+function toggleSign(){ if(display.startsWith('-')) {display=display.slice(1); expr=expr.slice(0,-display.length-1)+display;} else {display='-'+display; expr+='-';} update();}
+function backspace(){ if(expr.length>0){expr=expr.slice(0,-1); display=display.slice(0,-1)||'0'; update();}}
+function sciFunc(fn){
+  try{
+    let val = parseFloat(display)||0;
+    let res=0;
+    switch(fn){
+      case 'sin': res=Math.sin(val*Math.PI/180); break;
+      case 'cos': res=Math.cos(val*Math.PI/180); break;
+      case 'tan': res=Math.tan(val*Math.PI/180); break;
+      case 'log': res=Math.log10(val); break;
+      case 'ln': res=Math.log(val); break;
+      case 'sqrt': res=Math.sqrt(val); break;
+      case 'sq': res=val*val; break;
+      case 'fact': 
+        if(val<0||!Number.isInteger(val)) throw 'Error';
+        res=1; for(let i=2;i<=val;i++) res*=i; 
+        break;
+      case 'exp': res=Math.exp(val); break;
+      case 'pow': input('^'); return;
+    }
+    display=Number.isInteger(res)?res.toString():parseFloat(res.toFixed(8)).toString();
+    expr=display;
+    update();
+  }catch(e){display='Error'; expr=''; update();}
+}
+function calculate(){
+  try{
+    let e = expr.replace(/π/g, Math.PI.toString()).replace(/e/g, Math.E.toString()).replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-').replace(/\^/g,'**');
+    // handle % as /100
+    e = e.replace(/%/g,'/100');
+    // handle sqrt, etc already handled, just eval remaining
+    // safe eval for basic
+    let res = Function('"use strict"; return ('+e+')')();
+    if(!isFinite(res)) throw 'Error';
+    display=Number.isInteger(res)?res.toString():parseFloat(res.toFixed(10)).toString();
+    expr=display;
+    update();
+  }catch(err){
+    display='Error'; expr=''; update();
+  }
+}
+update();
 </script>
 </body>
 </html>
